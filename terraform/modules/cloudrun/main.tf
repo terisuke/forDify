@@ -38,6 +38,10 @@ resource "google_cloud_run_v2_service" "dify_service" {
   template {
     service_account       = google_service_account.dify_service_account.email
     execution_environment = "EXECUTION_ENVIRONMENT_GEN2"
+    scaling {
+      min_instance_count = 0
+      max_instance_count = 5
+    }
     containers {
       name  = "nginx"
       image = "${var.region}-docker.pkg.dev/${var.project_id}/${var.nginx_repository_id}/dify-nginx:latest"
@@ -191,7 +195,6 @@ resource "google_cloud_run_v2_service" "dify_service" {
         name  = "PM2_INSTANCES"
         value = 2
       }
-      # NOTE: Changing PM2_HOME is required for pm2 to work properly on Cloud Run Gen2 environment because of permission issues
       env {
         name  = "PM2_HOME"
         value = "/app/web/.pm2"
@@ -279,15 +282,19 @@ resource "google_cloud_run_v2_service" "dify_service" {
       }
       env {
         name  = "PYTHON_ENV_INIT_TIMEOUT"
-        value = 120
+        value = "600"
       }
       env {
         name  = "PLUGIN_MAX_EXECUTION_TIMEOUT"
-        value = 600
+        value = "1800"
       }
       env {
         name  = "PIP_MIRROR_URL"
         value = ""
+      }
+      env {
+        name  = "PLUGIN_REMOTE_INSTALLING_TIMEOUT"
+        value = "600"
       }
       startup_probe {
         timeout_seconds   = 240
@@ -375,10 +382,6 @@ resource "google_cloud_run_v2_service" "dify_service" {
         subnetwork = var.vpc_subnet_name
       }
       egress = "ALL_TRAFFIC"
-    }
-    scaling {
-      min_instance_count = 1
-      max_instance_count = 5
     }
     volumes {
       name = "plugin-daemon"

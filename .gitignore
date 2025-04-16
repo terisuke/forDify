@@ -1,4 +1,22 @@
-.terraform/**
-.terraform*
+# Terraform関連
+.terraform/
+.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+crash.log
+crash.*
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
 
+# macOS固有のファイル
 .DS_Store
+
+# その他の一般的な除外ファイル
+*.log
+*.bak
+*.swp
+*~

@@ -33,6 +33,9 @@ locals {
     "INDEXING_MAX_SEGMENTATION_TOKENS_LENGTH"    = var.indexing_max_segmentation_tokens_length
     "PLUGIN_DAEMON_KEY"                          = var.plugin_daemon_key
     "PLUGIN_DIFY_INNER_API_KEY"                  = var.plugin_dify_inner_api_key
+    "PIP_MIRROR_URL"                             = "https://pypi.tuna.tsinghua.edu.cn/simple"
+    "NEXT_PUBLIC_MARKETPLACE_API_PREFIX"         = "https://marketplace.dify.ai/api/v1"
+    "NEXT_PUBLIC_MARKETPLACE_URL_PREFIX"         = "https://marketplace.dify.ai"
   }
 }
 
