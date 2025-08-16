@@ -12,4 +12,8 @@ resource "google_filestore_instance" "default" {
     network = var.vpc_network_name
     modes   = ["MODE_IPV4"]
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }

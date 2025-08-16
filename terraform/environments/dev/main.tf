@@ -63,7 +63,7 @@ module "cloudrun" {
   filestore_fileshare_name    = module.filestore.filestore_fileshare_name
   shared_env_vars             = local.shared_env_vars
 
-  depends_on = [google_project_service.enabled_services]
+  depends_on = [google_project_service.enabled_services, module.cloudsql, module.redis, module.filestore]
 }
 
 module "cloudsql" {
@@ -77,7 +77,7 @@ module "cloudsql" {
 
   vpc_network_name = module.network.vpc_network_name
 
-  depends_on = [google_project_service.enabled_services]
+  depends_on = [google_project_service.enabled_services, module.network]
 }
 
 module "redis" {
@@ -88,7 +88,7 @@ module "redis" {
 
   vpc_network_name = module.network.vpc_network_name
 
-  depends_on = [google_project_service.enabled_services]
+  depends_on = [google_project_service.enabled_services, module.network]
 }
 
 module "network" {
@@ -117,7 +117,7 @@ module "filestore" {
 
   vpc_network_name = module.network.vpc_network_name
 
-  depends_on = [google_project_service.enabled_services]
+  depends_on = [google_project_service.enabled_services, module.network]
 }
 
 module "registry" {

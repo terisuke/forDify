@@ -23,6 +23,10 @@ resource "google_sql_database_instance" "postgres_instance" {
   region              = var.region
   deletion_protection = var.deletion_protection
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   settings {
     activation_policy = "ALWAYS"
     availability_type = "ZONAL"
@@ -87,4 +91,8 @@ resource "google_sql_user" "dify_user" {
   password = var.db_password
 
   depends_on = [google_sql_database_instance.postgres_instance]
+
+  lifecycle {
+    ignore_changes = [password]
+  }
 }

@@ -1,5 +1,5 @@
 resource "google_storage_bucket" "dify_storage" {
-  force_destroy               = false
+  force_destroy               = true
   location                    = upper(var.region)
   name                        = "${var.project_id}_${var.google_storage_bucket_name}"
   project                     = var.project_id

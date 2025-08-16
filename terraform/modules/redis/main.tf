@@ -8,4 +8,8 @@ resource "google_redis_instance" "dify_redis" {
   reserved_ip_range = "10.0.1.0/29"
 
   authorized_network = var.vpc_network_name
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }

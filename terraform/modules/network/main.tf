@@ -1,6 +1,10 @@
 resource "google_compute_network" "dify_vpc" {
   name                    = "dify-vpc"
   auto_create_subnetworks = false
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "google_compute_subnetwork" "dify_subnet" {
@@ -8,6 +12,10 @@ resource "google_compute_subnetwork" "dify_subnet" {
   ip_cidr_range = "10.0.0.0/24"
   region        = var.region
   network       = google_compute_network.dify_vpc.id
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "google_compute_firewall" "allow_http_https" {

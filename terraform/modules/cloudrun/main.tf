@@ -32,9 +32,12 @@ resource "google_cloud_run_service_iam_binding" "public_sanbox" {
 }
 
 resource "google_cloud_run_v2_service" "dify_service" {
-  name     = "dify-service"
-  location = var.region
-  ingress  = var.cloud_run_ingress
+  name                = "dify-service"
+  location            = var.region
+  ingress             = var.cloud_run_ingress
+  deletion_protection = false
+
+  depends_on = [google_project_iam_member.dify_service_account_role]
   template {
     service_account       = google_service_account.dify_service_account.email
     execution_environment = "EXECUTION_ENVIRONMENT_GEN2"
@@ -395,8 +398,11 @@ resource "google_cloud_run_v2_service" "dify_service" {
 }
 
 resource "google_cloud_run_v2_service" "dify_sandbox" {
-  name     = "dify-sandbox"
-  location = var.region
+  name                = "dify-sandbox"
+  location            = var.region
+  deletion_protection = false
+
+  depends_on = [google_project_iam_member.dify_service_account_role]
 
   template {
     containers {
