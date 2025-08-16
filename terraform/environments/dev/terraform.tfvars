@@ -19,6 +19,9 @@ storage_type                            = "google-storage"
 google_storage_bucket_name              = "dify"
 vector_store                            = "pgvector"
 indexing_max_segmentation_tokens_length = "1000"
-cloud_run_ingress                       = "INGRESS_TRAFFIC_ALL"
+<<<<<<< HEAD
+cloud_run_ingress                       = "INGRESS_TRAFFIC_ALL"            # recommend to setup load balancer and use "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER"
 plugin_daemon_key                       = "jCY6ecDDLQQwzA4hKyV20DrSsJGgAevtNxNFwJ2gbPP4P32iBE3INeUD"
 plugin_dify_inner_api_key               = "fPB37toNU7cEZcfBk/KtdCRNtusbI9oNeS0m8maTlyUpF3GsXAynFipP"
+min_instance_count                      = 1
+max_instance_count                      = 5

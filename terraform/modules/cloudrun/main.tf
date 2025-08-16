@@ -6,7 +6,6 @@ resource "google_service_account" "dify_service_account" {
 resource "google_project_iam_member" "dify_service_account_role" {
   for_each = toset([
     "roles/run.admin",
-    "roles/storage.admin",
   ])
   project = var.project_id
   member  = "serviceAccount:${google_service_account.dify_service_account.email}"
@@ -42,8 +41,8 @@ resource "google_cloud_run_v2_service" "dify_service" {
     service_account       = google_service_account.dify_service_account.email
     execution_environment = "EXECUTION_ENVIRONMENT_GEN2"
     scaling {
-      min_instance_count = 0
-      max_instance_count = 5
+      min_instance_count = var.min_instance_count
+      max_instance_count = var.max_instance_count
     }
     containers {
       name  = "nginx"
